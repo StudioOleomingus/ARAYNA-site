@@ -1,0 +1,24 @@
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.md { font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem); }
+.lg { font-size: clamp(2rem, 1.5rem + 1.6vw, 2.9rem); }
+
+/* Placeholder for the leaf-cluster mark: a dotted crescent */
+.glyph {
+  width: 1.15em;
+  height: 1.15em;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, currentColor 1.4px, transparent 1.6px) 0 0 / 5px 5px;
+  -webkit-mask: radial-gradient(circle at 78% 50%, transparent 38%, #000 39%);
+          mask: radial-gradient(circle at 78% 50%, transparent 38%, #000 39%);
+}
+.text { transform: translateY(-0.06em); }
+.img { height: 1.2em; width: auto; }

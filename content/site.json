@@ -1,0 +1,29 @@
+{
+  "name": "aranya",
+  "tagline": "Crafting spaces that are aesthetically compelling and ecologically meaningful",
+  "nav": [
+    { "label": "Projects", "href": "/projects" },
+    { "label": "About Us", "href": "#about" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "strands": [
+    { "id": "wild", "label": "Wild" },
+    { "id": "entangled", "label": "Entangled" },
+    { "id": "rooted", "label": "Rooted" }
+  ],
+  "contact": {
+    "heading": "Contact",
+    "lines": [
+      "Aranya Design Lab",
+      "Behind Krishna Prem",
+      "Tighra Village Road, Pardi",
+      "Valsad Gujarat - 396 185",
+      "India"
+    ]
+  },
+  "social": {
+    "email": "mailto:hello@example.com",
+    "linkedin": "https://www.linkedin.com/",
+    "instagram": "https://www.instagram.com/"
+  }
+}

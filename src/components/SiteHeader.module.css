@@ -1,0 +1,74 @@
+.bar {
+  position: relative;
+  z-index: 20;
+  background: var(--c-forest);
+  border-top: 4px solid #e5e5e5; /* the light rule above the bar in the mockup */
+}
+
+.inner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand { display: inline-flex; padding-left: 0.3rem; }
+
+.nav {
+  display: flex;
+  gap: clamp(1.5rem, 3.4vw, 3.1rem);
+  font-size: var(--fs-nav);
+  font-weight: 300;
+}
+.nav a {
+  color: var(--c-forest-soft);
+  transition: color 0.2s;
+}
+.nav a:hover { color: #fff; }
+
+.toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 10px;
+  margin-right: -10px;
+  cursor: pointer;
+}
+.burger,
+.burger::before,
+.burger::after {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: #fff;
+  transition: transform 0.25s var(--ease), opacity 0.2s;
+}
+.burger { position: relative; }
+.burger::before, .burger::after { content: ""; position: absolute; left: 0; }
+.burger::before { top: -7px; }
+.burger::after { top: 7px; }
+.burger[data-open="true"] { background: transparent; }
+.burger[data-open="true"]::before { transform: translateY(7px) rotate(45deg); }
+.burger[data-open="true"]::after { transform: translateY(-7px) rotate(-45deg); }
+
+/* Phones: nav drops down from the bar */
+@media (max-width: 560px) {
+  .toggle { display: block; }
+  .nav {
+    position: absolute;
+    inset: 100% 0 auto 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--c-forest);
+    padding: 0 var(--gutter) 0.75rem;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.3s var(--ease);
+    pointer-events: none;
+  }
+  .nav[data-open="true"] { clip-path: inset(0 0 0 0); pointer-events: auto; }
+  .nav a {
+    padding: 0.85rem 0;
+    font-size: 1.05rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+  }
+}

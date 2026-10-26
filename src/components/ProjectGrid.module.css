@@ -1,0 +1,88 @@
+/* ------------------------------------------------------------------
+   Adaptive grid
+   phone  < 520   : 1 column, filter bar
+   tablet 520–819 : 2 columns, filter bar
+   desktop ≥ 820  : one column per strand (3), pills as column heads
+   ------------------------------------------------------------------ */
+
+.wrap { --cols: 3; }
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr;
+}
+
+.item { transition: opacity 0.35s var(--ease), filter 0.35s var(--ease); }
+
+/* ---- Pills ---- */
+.pills {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: calc(var(--gap) + 0.25rem);
+}
+.pill {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--c-rule);
+  border-radius: 999px;
+  padding: 0.2em 1.6em 0.25em;
+  font-size: var(--fs-pill);
+  font-weight: 400;
+  color: var(--c-ink-soft);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.pill:hover { border-color: var(--c-ink-soft); }
+.pill[aria-pressed="true"] {
+  background: var(--c-forest);
+  border-color: var(--c-forest);
+  color: #fff;
+}
+
+/* ---- Phone + tablet: sticky, scrollable filter bar; non-matching cards are removed ---- */
+@media (max-width: 819px) {
+  .pills {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 0.75rem var(--gutter);
+    background: color-mix(in srgb, var(--c-paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pills::-webkit-scrollbar { display: none; }
+  .item[data-dim="true"] { display: none; }
+}
+
+@media (max-width: 519px) {
+  .pills { gap: 0.4rem; }
+  .pill { padding-inline: 0.95em; font-size: 0.875rem; }
+}
+
+@media (min-width: 520px) and (max-width: 819px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Desktop: strand columns ---- */
+@media (min-width: 820px) {
+  .pills,
+  .grid { grid-template-columns: repeat(var(--cols), 1fr); column-gap: var(--gap); }
+
+  .pills { display: grid; }
+  .allPill { display: none; }
+  .pill { grid-column: var(--col); justify-self: center; grid-row: 1; }
+
+  /* "dense" + a fixed column per card = each card stacks under the last one in its strand */
+  .grid { grid-auto-flow: row dense; }
+  .item { grid-column: var(--col); }
+
+  /* spotlight: other columns step back rather than disappear */
+  .item[data-dim="true"] { opacity: 0.22; filter: grayscale(0.7); }
+}

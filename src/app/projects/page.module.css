@@ -1,0 +1,20 @@
+.intro {
+  padding-top: clamp(2rem, 4.5vw, 4.5rem);
+  padding-bottom: clamp(2rem, 8vw, 8.5rem);
+}
+.title {
+  margin: 0;
+  font-size: var(--fs-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+}
+.lede {
+  margin: 0.35em 0 0;
+  font-size: var(--fs-lede);
+  font-weight: 400;
+  max-width: 40ch;
+}
+@media (min-width: 820px) {
+  .lede { max-width: none; }
+}

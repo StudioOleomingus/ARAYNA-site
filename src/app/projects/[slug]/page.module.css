@@ -1,0 +1,41 @@
+.page { padding-bottom: 6rem; }
+
+.hero {
+  position: relative;
+  height: min(78vh, 760px);
+  min-height: 360px;
+  background: #222;
+  overflow: hidden;
+}
+.heroImg { object-fit: cover; }
+.scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.65), transparent 50%);
+}
+.heroText {
+  position: absolute;
+  left: 0; right: 0; bottom: clamp(1.5rem, 5vw, 3.5rem);
+  color: #fff;
+}
+.eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.8;
+}
+.title {
+  margin: 0.2rem 0 0;
+  font-size: clamp(2rem, 1.4rem + 3vw, 4.25rem);
+  font-weight: 300;
+  line-height: 1.05;
+}
+
+.meta { padding-top: 2.5rem; }
+.meta dl {
+  display: flex; flex-wrap: wrap; gap: 1.5rem 3rem;
+  margin: 0 0 2rem;
+}
+.meta dt { font-size: var(--fs-small); color: var(--c-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.meta dd { margin: 0; font-size: 1rem; }
+.todo { color: var(--c-muted); }
+.back { display: inline-block; margin-top: 1.5rem; border-bottom: 1px solid currentColor; }
