@@ -12,7 +12,8 @@
   justify-content: space-between;
 }
 
-.brand { display: inline-flex; padding-left: 0.3rem; }
+.brand { display: inline-flex; align-items: center; min-width: 1px; }
+.brand img { width: auto; max-width: min(60vw, 320px); object-fit: contain; }
 
 .nav {
   display: flex;

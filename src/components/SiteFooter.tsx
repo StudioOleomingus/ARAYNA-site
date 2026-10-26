@@ -1,14 +1,17 @@
 import type { Site } from "@/lib/types";
-import Wordmark from "./Wordmark";
 import styles from "./SiteFooter.module.css";
 
 export default function SiteFooter({ site }: { site: Site }) {
-  const year = new Date().getFullYear();
+  const year = String(new Date().getFullYear());
+  const logo = site.logo.footerSrc || site.logo.src;
   return (
     <footer className={styles.footer} id="contact">
       <div className={`container ${styles.grid}`}>
         <div className={styles.brandCol}>
-          <Wordmark name={site.name} size="lg" />
+          {logo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logo} alt={site.name} className={styles.logo} style={{ height: site.logo.footerHeight }} />
+          )}
           <ul className={styles.social}>
             {site.social.email && (
               <li>
@@ -47,16 +50,14 @@ export default function SiteFooter({ site }: { site: Site }) {
 
         <address className={styles.contact}>
           <strong>{site.contact.heading}</strong>
-          {site.contact.lines.map((l) => (
-            <span key={l}>{l}</span>
+          {site.contact.lines.map((l, i) => (
+            <span key={i}>{l}</span>
           ))}
         </address>
       </div>
 
       <div className={styles.rule}>
-        <small>
-          {year} {site.name}. All rights reserved.
-        </small>
+        <small>{site.copyright.replace("{year}", year)}</small>
       </div>
     </footer>
   );

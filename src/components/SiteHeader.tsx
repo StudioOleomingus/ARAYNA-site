@@ -3,16 +3,20 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Site } from "@/lib/types";
-import Wordmark from "./Wordmark";
 import styles from "./SiteHeader.module.css";
 
 export default function SiteHeader({ site }: { site: Site }) {
   const [open, setOpen] = useState(false);
+  const { logo } = site;
   return (
     <header className={styles.bar}>
       <div className={`container ${styles.inner}`}>
-        <Link href="/projects" className={styles.brand}>
-          <Wordmark name={site.name} />
+        {/* Logo is set in /admin → Site & type. Without one, the slot stays empty. */}
+        <Link href="/projects" className={styles.brand} aria-label={site.name}>
+          {logo.src && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logo.src} alt={site.name} style={{ height: logo.headerHeight }} />
+          )}
         </Link>
 
         <button
@@ -27,7 +31,7 @@ export default function SiteHeader({ site }: { site: Site }) {
 
         <nav id="site-nav" className={styles.nav} data-open={open}>
           {site.nav.map((item) => (
-            <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <Link key={item.href + item.label} href={item.href} onClick={() => setOpen(false)}>
               {item.label}
             </Link>
           ))}

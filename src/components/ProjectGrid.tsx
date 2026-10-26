@@ -1,66 +1,87 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { Project, Strand } from "@/lib/types";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { arrange, type Arrangement, type Project } from "@/lib/types";
 import ProjectCard from "./ProjectCard";
 import styles from "./ProjectGrid.module.css";
 
 /**
- * One list of cards, two layouts:
- *  - Desktop (≥ 820px): one column per strand, pills sit on top as column heads.
- *    Clicking a pill spotlights that column.
- *  - Tablet / phone: pills become a sticky filter bar (with "All"), and the cards
- *    flow into a 2- or 1-column grid.
+ * The pills (Wild / Entangled / Rooted) each re-order every project into a
+ * curated arrangement. Pressing the active pill again returns to the default order.
  *
- * Cards are interleaved across strands (row by row, as the desktop reads), so the
- * "All" view on a phone keeps the same rhythm as the desktop grid.
+ * Cards glide from their old slot to the new one (FLIP: measure First, apply
+ * the change, measure Last, Invert with a transform, Play it back to zero).
+ * The cascade starts at the top-left so the grid "re-deals" in reading order.
  */
-export default function ProjectGrid({ projects, strands }: { projects: Project[]; strands: Strand[] }) {
+const DURATION = 750;
+const STAGGER = 28;
+const EASE = "cubic-bezier(0.22, 0.8, 0.24, 1)";
+
+export default function ProjectGrid({ projects, arrangements }: { projects: Project[]; arrangements: Arrangement[] }) {
   const [active, setActive] = useState<string | null>(null);
+  const nodes = useRef(new Map<string, HTMLLIElement>());
+  const before = useRef<Map<string, DOMRect> | null>(null);
 
-  const ordered = useMemo(() => {
-    const lanes = strands.map((s) => projects.filter((p) => p.strand === s.id));
-    const orphans = projects.filter((p) => !strands.some((s) => s.id === p.strand));
-    const out: Project[] = [];
-    const depth = Math.max(0, ...lanes.map((l) => l.length));
-    for (let row = 0; row < depth; row++) for (const lane of lanes) if (lane[row]) out.push(lane[row]);
-    return [...out, ...orphans];
-  }, [projects, strands]);
+  const ordered = useMemo(
+    () => arrange(projects, arrangements.find((a) => a.id === active)?.order),
+    [projects, arrangements, active]
+  );
 
-  const colOf = (id: string) => Math.max(0, strands.findIndex((s) => s.id === id)) + 1;
-  const toggle = (id: string | null) => setActive((cur) => (cur === id ? null : id));
+  const choose = (id: string) => {
+    // First: remember where every card is before the change
+    const rects = new Map<string, DOMRect>();
+    nodes.current.forEach((el, key) => rects.set(key, el.getBoundingClientRect()));
+    before.current = rects;
+    setActive((cur) => (cur === id ? null : id));
+  };
+
+  useLayoutEffect(() => {
+    const first = before.current;
+    before.current = null;
+    if (!first) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    ordered.forEach((p, i) => {
+      const el = nodes.current.get(p.id);
+      const a = first.get(p.id);
+      if (!el || !a) return;
+      // Last
+      const b = el.getBoundingClientRect();
+      const dx = a.left - b.left;
+      const dy = a.top - b.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      // Invert + Play
+      el.getAnimations().forEach((anim) => anim.cancel());
+      el.animate(
+        [
+          { transform: `translate(${dx}px, ${dy}px)`, zIndex: 2 },
+          { transform: `translate(${dx * 0.08}px, ${dy * 0.08}px) scale(0.985)`, offset: 0.7, zIndex: 2 },
+          { transform: "none", zIndex: 2 },
+        ],
+        { duration: DURATION, delay: i * STAGGER, easing: EASE, fill: "backwards" }
+      );
+    });
+  }, [ordered]);
 
   return (
-    <section
-      className={styles.wrap}
-      style={{ "--cols": strands.length } as React.CSSProperties}
-      data-active={active ?? "all"}
-    >
-      <div className={styles.pills} role="toolbar" aria-label="Filter projects">
-        <button className={`${styles.pill} ${styles.allPill}`} aria-pressed={active === null} onClick={() => setActive(null)}>
-          All
-        </button>
-        {strands.map((s) => (
-          <button
-            key={s.id}
-            className={styles.pill}
-            aria-pressed={active === s.id}
-            onClick={() => toggle(s.id)}
-            style={{ "--col": colOf(s.id) } as React.CSSProperties}
-          >
-            {s.label}
+    <section className={styles.wrap} data-active={active ?? "none"}>
+      <div className={styles.pills} role="group" aria-label="Arrange projects">
+        {arrangements.map((a) => (
+          <button key={a.id} className={styles.pill} aria-pressed={active === a.id} onClick={() => choose(a.id)}>
+            {a.label}
           </button>
         ))}
       </div>
 
-      <ul className={styles.grid}>
+      <ul className={styles.grid} aria-live="polite">
         {ordered.map((p, i) => (
           <li
             key={p.id}
             className={styles.item}
-            data-strand={p.strand}
-            data-dim={active !== null && active !== p.strand}
-            style={{ "--col": colOf(p.strand) } as React.CSSProperties}
+            ref={(el) => {
+              if (el) nodes.current.set(p.id, el);
+              else nodes.current.delete(p.id);
+            }}
           >
             <ProjectCard project={p} priority={i < 3} />
           </li>

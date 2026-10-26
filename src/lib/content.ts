@@ -14,6 +14,7 @@ export async function getSite(): Promise<Site> {
   return JSON.parse(await fs.readFile(SITE_FILE, "utf8"));
 }
 
+/** Every project, drafts included, in the default order. */
 export async function getAllProjects(): Promise<Project[]> {
   return JSON.parse(await fs.readFile(PROJECTS_FILE, "utf8"));
 }
@@ -26,11 +27,14 @@ export async function getProject(slug: string) {
   return (await getProjects()).find((p) => p.slug === slug) ?? null;
 }
 
-export async function saveProjects(projects: Project[]) {
-  const tmp = PROJECTS_FILE + ".tmp";
-  await fs.writeFile(tmp, JSON.stringify(projects, null, 2) + "\n", "utf8");
-  await fs.rename(tmp, PROJECTS_FILE);
+async function writeJson(file: string, data: unknown) {
+  const tmp = file + ".tmp";
+  await fs.writeFile(tmp, JSON.stringify(data, null, 2) + "\n", "utf8");
+  await fs.rename(tmp, file);
 }
+
+export const saveProjects = (projects: Project[]) => writeJson(PROJECTS_FILE, projects);
+export const saveSite = (site: Site) => writeJson(SITE_FILE, site);
 
 /** The editor and its API only exist while running `npm run dev`. */
 export const editorEnabled = process.env.NODE_ENV === "development";

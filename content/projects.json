@@ -6,10 +6,12 @@
     "category": "Interiors",
     "location": "Juhu, Mumbai",
     "year": "2025",
-    "strand": "wild",
     "image": "/projects/lohtse.jpg",
     "alt": "Timber-slatted interior with indoor plants",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -19,10 +21,12 @@
     "category": "Architecture and Landscape",
     "location": "Sarodhi, Valsad",
     "year": "2024",
-    "strand": "entangled",
     "image": "/projects/mango-tree-house.jpg",
     "alt": "A mature mango tree growing through a courtyard house",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -32,10 +36,12 @@
     "category": "Urban Design and Research",
     "location": "Trimbakeshwar, Nashik",
     "year": "2024",
-    "strand": "rooted",
     "image": "/projects/frame-reconnect-enhance.jpg",
     "alt": "Aerial rendering of a stone temple and its precinct",
-    "focal": { "x": 50, "y": 40 },
+    "focal": {
+      "x": 50,
+      "y": 40
+    },
     "published": true
   },
   {
@@ -45,10 +51,12 @@
     "category": "Landscape",
     "location": "Pardi, Gujarat",
     "year": "2021",
-    "strand": "wild",
     "image": "/projects/krishna-prem.jpg",
     "alt": "Planted courtyard steps outside a house",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -58,10 +66,12 @@
     "category": "Landscape",
     "location": "GIDC Vapi, Gujarat",
     "year": "2021",
-    "strand": "entangled",
     "image": "/projects/aryan-paper-mills.jpg",
     "alt": "Curved stone gabion wall beneath a tree canopy",
-    "focal": { "x": 50, "y": 60 },
+    "focal": {
+      "x": 50,
+      "y": 60
+    },
     "published": true
   },
   {
@@ -71,10 +81,12 @@
     "category": "Landscape and Urban Design",
     "location": "Goda Park, Nashik",
     "year": "2025",
-    "strand": "rooted",
     "image": "/projects/wri-goda-park.jpg",
     "alt": "Site plan of a riverfront park",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -84,10 +96,12 @@
     "category": "Landscape and Interiors",
     "location": "Tardeo, Mumbai",
     "year": "2024",
-    "strand": "wild",
     "image": "/projects/edge-samiras-garden.jpg",
     "alt": "Dense terrace garden with a lounge chair",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -97,10 +111,12 @@
     "category": "Landscape and Interiors",
     "location": "Lower Parel, Mumbai",
     "year": "2021",
-    "strand": "entangled",
     "image": "/projects/leo-burnett.jpg",
     "alt": "Office interior with planters and hexagonal lights",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -110,10 +126,12 @@
     "category": "Landscape",
     "location": "San Francisco, CA",
     "year": "2024",
-    "strand": "rooted",
     "image": "/projects/mirabel-house.jpg",
     "alt": "Timber-clad house with a planted patio",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -123,10 +141,12 @@
     "category": "Landscape and Architecture",
     "location": "Chelsea, United Kingdom",
     "year": "2023",
-    "strand": "wild",
     "image": "/projects/jay-day.jpg",
     "alt": "Axonometric drawing of a planted pavilion",
-    "focal": { "x": 50, "y": 55 },
+    "focal": {
+      "x": 50,
+      "y": 55
+    },
     "published": true
   },
   {
@@ -136,10 +156,12 @@
     "category": "Architecture and Landscape",
     "location": "Cuddalore, Tamil Nadu",
     "year": "2025",
-    "strand": "entangled",
     "image": "/projects/fort-saint-david.jpg",
     "alt": "Rendering of a garden path through trees",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   },
   {
@@ -149,10 +171,12 @@
     "category": "Research",
     "location": "Tighra and Sarodhi, Valsad",
     "year": "2025",
-    "strand": "rooted",
     "image": "/projects/paravartan-wetland-journal.jpg",
     "alt": "Illustrated sections of wetland plants",
-    "focal": { "x": 50, "y": 50 },
+    "focal": {
+      "x": 50,
+      "y": 50
+    },
     "published": true
   }
 ]

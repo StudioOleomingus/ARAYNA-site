@@ -5,7 +5,9 @@ import SiteFooter from "@/components/SiteFooter";
 import ProjectGrid from "@/components/ProjectGrid";
 import styles from "./page.module.css";
 
-export const metadata: Metadata = { title: "Projects" };
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: (await getSite()).pageTitle };
+}
 
 export default async function ProjectsPage() {
   const [site, projects] = await Promise.all([getSite(), getProjects()]);
@@ -15,10 +17,10 @@ export default async function ProjectsPage() {
       <SiteHeader site={site} />
       <main className="container">
         <header className={styles.intro}>
-          <h1 className={styles.title}>Projects</h1>
+          <h1 className={styles.title}>{site.pageTitle}</h1>
           <p className={styles.lede}>{site.tagline}</p>
         </header>
-        <ProjectGrid projects={projects} strands={site.strands} />
+        <ProjectGrid projects={projects} arrangements={site.arrangements} />
       </main>
       <SiteFooter site={site} />
     </>

@@ -1,16 +1,95 @@
 {
   "name": "aranya",
+  "pageTitle": "Projects",
   "tagline": "Crafting spaces that are aesthetically compelling and ecologically meaningful",
+  "copyright": "{year} aranya. All rights reserved.",
   "nav": [
-    { "label": "Projects", "href": "/projects" },
-    { "label": "About Us", "href": "#about" },
-    { "label": "Contact", "href": "#contact" }
+    {
+      "label": "Projects",
+      "href": "/projects"
+    },
+    {
+      "label": "About Us",
+      "href": "#about"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
   ],
-  "strands": [
-    { "id": "wild", "label": "Wild" },
-    { "id": "entangled", "label": "Entangled" },
-    { "id": "rooted", "label": "Rooted" }
+  "arrangements": [
+    {
+      "id": "wild",
+      "label": "Wild",
+      "order": [
+        "p04",
+        "p05",
+        "p06",
+        "p09",
+        "p10",
+        "p02",
+        "p07",
+        "p11",
+        "p12",
+        "p03",
+        "p08",
+        "p01"
+      ]
+    },
+    {
+      "id": "entangled",
+      "label": "Entangled",
+      "order": [
+        "p02",
+        "p06",
+        "p03",
+        "p07",
+        "p10",
+        "p11",
+        "p08",
+        "p12",
+        "p05",
+        "p04",
+        "p09",
+        "p01"
+      ]
+    },
+    {
+      "id": "rooted",
+      "label": "Rooted",
+      "order": [
+        "p11",
+        "p03",
+        "p04",
+        "p09",
+        "p02",
+        "p06",
+        "p10",
+        "p12",
+        "p05",
+        "p07",
+        "p01",
+        "p08"
+      ]
+    }
   ],
+  "logo": {
+    "src": "",
+    "footerSrc": "",
+    "headerHeight": 40,
+    "footerHeight": 56
+  },
+  "fonts": {
+    "body": {
+      "source": "bundled",
+      "family": "Poppins"
+    },
+    "heading": {
+      "source": "bundled",
+      "family": "Poppins",
+      "weight": 400
+    }
+  },
   "contact": {
     "heading": "Contact",
     "lines": [

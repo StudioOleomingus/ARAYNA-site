@@ -12,15 +12,24 @@ npm run dev
 - Projects page → http://localhost:3000/projects
 - Editor → http://localhost:3000/admin  (only exists while `npm run dev` is running)
 
-## Updating projects
+## Editing content — `/admin` (three tabs)
 
-1. `npm run dev`, open `/admin`.
-2. Add / edit / delete / reorder projects, drop in images, click the photo to set its focal point.
-3. **Save** (or Ctrl/⌘ + S). This writes `content/projects.json`; uploaded images are resized to 2400px max and saved in `public/projects/`.
-4. Commit and push. If the repo is connected to Vercel, the live site rebuilds itself in about a minute.
+**Projects** — add, edit, duplicate, delete; drop in images and click the photo to set its focal point.
+New projects start as **Draft** (hidden) until switched to Published. The list order is the default order.
 
-New projects start as **Draft** (hidden) until you switch them to Published.
-Deleting a project doesn't delete its image file; clean up `public/projects/` by hand when you want to.
+**Arrangements** — each pill on the projects page (Wild / Entangled / Rooted) re-deals every project
+into its own order. Pick an arrangement and drag tiles (or use ← →). "Default" is the order before any
+pill is pressed. New projects are appended to the end of every arrangement.
+
+**Site & type** — logo (header, optional separate footer logo, heights), fonts (bundled Poppins,
+any Google Font by name, or an uploaded .woff2/.ttf/.otf), page title, tagline, pill labels, navigation,
+footer address, social links, copyright.
+
+Press **Save** (or Ctrl/⌘ + S) — this writes `content/projects.json` and `content/site.json`.
+Uploads land in `public/projects/`, `public/brand/` and `public/fonts/` straight away.
+Then commit and push; Vercel rebuilds the live site in about a minute.
+
+Removing a project or logo doesn't delete its file; tidy those folders by hand when you want to.
 
 ## Where things live
 
@@ -28,28 +37,33 @@ Deleting a project doesn't delete its image file; clean up `public/projects/` by
 |---|---|
 | Colours, type scale, spacing, card ratio | `src/app/globals.css` (`:root` tokens) |
 | Project list | `content/projects.json` |
-| Tagline, nav, strand names (Wild / Entangled / Rooted), contact, socials | `content/site.json` |
+| Logo, fonts, page text, nav, arrangements (pill labels + orders), contact, socials | `content/site.json` |
 | Card | `src/components/ProjectCard.tsx` + `.module.css` |
-| Grid + filter pills | `src/components/ProjectGrid.tsx` + `.module.css` |
-| Header / footer / logo | `src/components/SiteHeader.tsx`, `SiteFooter.tsx`, `Wordmark.tsx` |
+| Grid, pills, re-arrange animation | `src/components/ProjectGrid.tsx` + `.module.css` |
+| Header / footer | `src/components/SiteHeader.tsx`, `SiteFooter.tsx` |
+| Font settings → CSS | `src/lib/fonts.ts` |
 | Projects page | `src/app/projects/page.tsx` |
 | Project page (stub) | `src/app/projects/[slug]/page.tsx` |
-| Editor | `src/app/admin/` + `src/app/api/admin/` |
+| Editor | `src/app/admin/` (Editor, ProjectsTab, ArrangementsTab, SiteTab) + `src/app/api/admin/` |
 | Reading/writing content | `src/lib/content.ts` (swap this to move to a CMS later) |
-
-**Logo:** put `logo.svg` in `public/brand/` and follow the comment in `src/components/Wordmark.tsx`.
 
 ## Grid behaviour
 
 | Width | Layout |
 |---|---|
-| ≥ 820px | One column per strand; pills are column heads and spotlight a column when clicked |
-| 520–819px | 2 columns; pills become a sticky filter bar with "All" |
-| < 520px | 1 column; same filter bar |
+| ≥ 820px | 3 columns, a pill centred over each |
+| 520–819px | 2 columns, sticky pill bar |
+| < 520px | 1 column, sticky pill bar |
 
-Cards keep a 3:4 ratio at every width; the focal point keeps the subject in frame.
+The order always reads left→right, top→bottom, so an arrangement keeps its sequence at every width.
+Cards keep a 3:4 ratio; the focal point keeps the subject in frame.
 
-## Transitions
+Pressing a pill re-orders the cards and each one glides to its new slot (FLIP animation, staggered in
+reading order). Pressing the active pill again returns to the default order. Timing: `DURATION`, `STAGGER`
+and `EASE` at the top of `ProjectGrid.tsx`. The pressed-pill style is `.pill[aria-pressed="true"]` in
+`ProjectGrid.module.css`.
+
+## Page transitions
 
 Card images and the project-page hero share a `<ViewTransition name="project-{slug}">`, so the thumbnail
 morphs into the hero on navigation. Timing lives in `globals.css` (`::view-transition-group`).

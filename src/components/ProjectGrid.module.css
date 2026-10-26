@@ -1,11 +1,9 @@
 /* ------------------------------------------------------------------
-   Adaptive grid
-   phone  < 520   : 1 column, filter bar
-   tablet 520–819 : 2 columns, filter bar
-   desktop ≥ 820  : one column per strand (3), pills as column heads
+   Adaptive grid — same order at every width, read left→right, top→bottom
+   phone  < 520   : 1 column
+   tablet 520–819 : 2 columns
+   desktop ≥ 820  : 3 columns, one pill centred over each column
    ------------------------------------------------------------------ */
-
-.wrap { --cols: 3; }
 
 .grid {
   list-style: none;
@@ -16,7 +14,10 @@
   grid-template-columns: 1fr;
 }
 
-.item { transition: opacity 0.35s var(--ease), filter 0.35s var(--ease); }
+.item {
+  position: relative;
+  will-change: transform;
+}
 
 /* ---- Pills ---- */
 .pills {
@@ -35,54 +36,42 @@
   color: var(--c-ink-soft);
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
-.pill:hover { border-color: var(--c-ink-soft); }
+.pill:hover { border-color: #a9a79f; }
+/* Pressed: quiet, to stay close to the mockup — swap for a filled style if you want it louder */
 .pill[aria-pressed="true"] {
-  background: var(--c-forest);
-  border-color: var(--c-forest);
-  color: #fff;
+  background: #fff;
+  border-color: var(--c-ink-soft);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
 }
 
-/* ---- Phone + tablet: sticky, scrollable filter bar; non-matching cards are removed ---- */
+/* ---- Phone + tablet: sticky pill bar ---- */
 @media (max-width: 819px) {
   .pills {
     position: sticky;
     top: 0;
     z-index: 5;
+    justify-content: center;
     margin-inline: calc(-1 * var(--gutter));
     padding: 0.75rem var(--gutter);
     background: color-mix(in srgb, var(--c-paper) 92%, transparent);
     backdrop-filter: blur(8px);
-    overflow-x: auto;
-    scrollbar-width: none;
   }
-  .pills::-webkit-scrollbar { display: none; }
-  .item[data-dim="true"] { display: none; }
 }
 
 @media (max-width: 519px) {
   .pills { gap: 0.4rem; }
-  .pill { padding-inline: 0.95em; font-size: 0.875rem; }
+  .pill { padding-inline: 1.1em; font-size: 0.875rem; }
 }
 
 @media (min-width: 520px) and (max-width: 819px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ---- Desktop: strand columns ---- */
+/* ---- Desktop: three columns, pills sit over them ---- */
 @media (min-width: 820px) {
   .pills,
-  .grid { grid-template-columns: repeat(var(--cols), 1fr); column-gap: var(--gap); }
-
-  .pills { display: grid; }
-  .allPill { display: none; }
-  .pill { grid-column: var(--col); justify-self: center; grid-row: 1; }
-
-  /* "dense" + a fixed column per card = each card stacks under the last one in its strand */
-  .grid { grid-auto-flow: row dense; }
-  .item { grid-column: var(--col); }
-
-  /* spotlight: other columns step back rather than disappear */
-  .item[data-dim="true"] { opacity: 0.22; filter: grayscale(0.7); }
+  .grid { grid-template-columns: repeat(3, 1fr); column-gap: var(--gap); }
+  .pills { display: grid; justify-items: center; }
 }

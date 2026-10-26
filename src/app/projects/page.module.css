@@ -5,7 +5,8 @@
 .title {
   margin: 0;
   font-size: var(--fs-display);
-  font-weight: 400;
+  font-family: var(--font-display, inherit);
+  font-weight: var(--fw-display, 400);
   line-height: 1.05;
   letter-spacing: -0.005em;
 }

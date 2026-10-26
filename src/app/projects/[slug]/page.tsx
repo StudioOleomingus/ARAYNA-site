@@ -21,7 +21,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const [site, p] = await Promise.all([getSite(), getProject(slug)]);
   if (!p) notFound();
-  const strand = site.strands.find((s) => s.id === p.strand);
 
   return (
     <>
@@ -50,7 +49,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <dl>
             <div><dt>Location</dt><dd>{p.location}</dd></div>
             <div><dt>Year</dt><dd>{p.year}</dd></div>
-            {strand && <div><dt>Strand</dt><dd>{strand.label}</dd></div>}
           </dl>
           <p className={styles.todo}>Project story, drawings and gallery will go here.</p>
           <Link href="/projects" className={styles.back}>← All projects</Link>
