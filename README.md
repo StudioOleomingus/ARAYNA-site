@@ -1,12 +1,8 @@
 
 // Next.js 16 · React 19 · plain CSS · content in JSON.
 
-// To run:
+Willneed npm run dev to run.
 
-```bash
-npm install
-npm run dev
-```
 
 - Projects / Menu page : http://localhost:3000/projects
 - CRUD : http://localhost:3000/admin  (only exists while `npm run dev` is running)
